@@ -22,6 +22,3 @@ The site is fully client-side and powered by a single HTML file and a JSON data 
    - Cards Collected: 0
 
 ---
-
-## File Structure
-
