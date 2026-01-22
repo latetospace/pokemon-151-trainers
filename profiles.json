@@ -1,0 +1,9 @@
+{
+  "defaultCollector": "Unclaimed",
+  "profiles": {
+    "1":  { "collectorName": "Sarah Green",  "instagram": "https://instagram.com/sarahgreen", "tiktok": "", "x": "https://x.com/sarahgreen" },
+    "4":  { "collectorName": "Mike Lopez",   "instagram": "", "tiktok": "https://tiktok.com/@mike.lopez", "x": "" },
+    "25": { "collectorName": "AshPika25",    "instagram": "https://instagram.com/ashpika25", "tiktok": "https://tiktok.com/@ashpika25", "x": "https://x.com/ashpika25" },
+    "140": { "collectorName": "Kabuto King", "instagram": "https://instagram.com/kabutoking", "tiktok": "https://tiktok.com/@kabutoking", "x": "https://x.com/kabutoking" }
+  }
+}
