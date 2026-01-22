@@ -15,7 +15,9 @@
       --shadow:0 10px 30px rgba(0,0,0,0.35);
       --radius:18px;
     }
+
     *{ box-sizing:border-box; }
+
     body{
       margin:0;
       background:
@@ -34,11 +36,13 @@
       background: rgba(11,13,18,0.65);
       border-bottom: 1px solid var(--border);
     }
+
     .wrap{
       max-width: 1280px;
       margin: 0 auto;
       padding: 18px 16px;
     }
+
     .topbar{
       display:flex;
       align-items:center;
@@ -46,7 +50,8 @@
       gap:14px;
       flex-wrap:wrap;
     }
-    h1{ margin:0; font-size:22px; letter-spacing:0.2px; }
+
+    h1{ margin:0; font-size:22px; }
 
     .search{
       width: min(520px, 86vw);
@@ -55,108 +60,107 @@
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.07);
       color: var(--text);
-      outline: none;
       font-size: 15px;
     }
-    .search::placeholder{ color: rgba(232,236,246,0.55); }
 
     .grid{
       display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 16px;
       padding: 18px 16px;
     }
-    @media (min-width: 640px){ .grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    @media (min-width: 900px){ .grid{ grid-template-columns: repeat(5, minmax(0, 1fr)); } }
-    @media (min-width: 1100px){ .grid{ grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+
+    @media (min-width:640px){ .grid{ grid-template-columns: repeat(3,1fr); } }
+    @media (min-width:900px){ .grid{ grid-template-columns: repeat(5,1fr); } }
+    @media (min-width:1100px){ .grid{ grid-template-columns: repeat(6,1fr); } }
 
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 14px;
+      padding: 16px;
       display:flex;
       flex-direction:column;
-      gap: 12px;
-      min-height: 270px;
+      gap: 14px;
+      min-height: 320px;
     }
 
-    .row{
+    /* Pokémon section */
+    .pokemon{
       display:flex;
-      gap: 12px;
+      flex-direction:column;
       align-items:center;
+      text-align:center;
+      gap: 6px;
     }
 
     .sprite{
-      width: 92px;
-      height: 92px;
-      border-radius: 18px;
+      width: 128px;
+      height: 128px;
+      border-radius: 22px;
       background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.12);
       display:grid;
       place-items:center;
-      flex: 0 0 auto;
     }
+
     .sprite img{
-      width: 84px;
-      height: 84px;
+      width: 118px;
+      height: 118px;
       image-rendering: pixelated;
     }
 
-    .meta{
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-      min-width: 0;
-    }
     .pname{
       margin:0;
-      font-weight: 750;
       font-size: 18px;
-      line-height: 1.05;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-weight: 750;
+      line-height: 1.1;
     }
+
     .dex{
       font-size: 14px;
       color: var(--muted);
     }
 
-    .links{
+    /* Trainer + stats */
+    .stats-row{
+      margin-top:auto;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 12px;
       display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
       gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 2px;
     }
-    .links a{
+
+    .stats{
+      font-size: 14px;
+      color: var(--muted);
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+
+    .stats span{
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .x-link a{
       font-size: 14px;
       color: var(--link);
       text-decoration:none;
       border: 1px solid rgba(159,211,255,0.30);
       background: rgba(159,211,255,0.10);
-      padding: 8px 12px;
+      padding: 8px 14px;
       border-radius: 999px;
-    }
-    .links a[aria-disabled="true"]{
-      opacity: 0.45;
-      pointer-events:none;
+      white-space: nowrap;
     }
 
-    .stats{
-      margin-top: auto;
-      font-size: 14px;
-      color: var(--muted);
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 12px;
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-    }
-    .stats span{
-      color: var(--text);
-      font-weight: 700;
+    .x-link a[aria-disabled="true"]{
+      opacity: 0.45;
+      pointer-events:none;
     }
 
     .footer{
@@ -166,156 +170,128 @@
       max-width: 1280px;
       margin: 0 auto;
     }
-    code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace; }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="wrap topbar">
-      <h1>151 Trainers</h1>
-      <input id="search" class="search" type="search" placeholder="Search Pokémon (e.g., pikachu, #25, 25)" />
-    </div>
-  </header>
-
-  <main class="wrap" style="padding:0;">
-    <div id="grid" class="grid" aria-live="polite"></div>
-  </main>
-
-  <div class="footer">
-    Trainer data loaded from <code>profiles.json</code>
+<header>
+  <div class="wrap topbar">
+    <h1>151 Trainers</h1>
+    <input id="search" class="search" type="search" placeholder="Search Pokémon (e.g. pikachu, #25)" />
   </div>
+</header>
 
-  <script>
-    // Full Gen 1 Pokémon names (1–151)
-    const names = [
-      "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard",
-      "Squirtle","Wartortle","Blastoise","Caterpie","Metapod","Butterfree",
-      "Weedle","Kakuna","Beedrill","Pidgey","Pidgeotto","Pidgeot",
-      "Rattata","Raticate","Spearow","Fearow","Ekans","Arbok",
-      "Pikachu","Raichu","Sandshrew","Sandslash","Nidoran♀","Nidorina","Nidoqueen",
-      "Nidoran♂","Nidorino","Nidoking","Clefairy","Clefable","Vulpix","Ninetales",
-      "Jigglypuff","Wigglytuff","Zubat","Golbat","Oddish","Gloom","Vileplume",
-      "Paras","Parasect","Venonat","Venomoth","Diglett","Dugtrio","Meowth","Persian",
-      "Psyduck","Golduck","Mankey","Primeape","Growlithe","Arcanine","Poliwag","Poliwhirl","Poliwrath",
-      "Abra","Kadabra","Alakazam","Machop","Machoke","Machamp","Bellsprout","Weepinbell","Victreebel",
-      "Tentacool","Tentacruel","Geodude","Graveler","Golem","Ponyta","Rapidash",
-      "Slowpoke","Slowbro","Magnemite","Magneton","Farfetch'd","Doduo","Dodrio","Seel","Dewgong",
-      "Grimer","Muk","Shellder","Cloyster","Gastly","Haunter","Gengar","Onix",
-      "Drowzee","Hypno","Krabby","Kingler","Voltorb","Electrode","Exeggcute","Exeggutor",
-      "Cubone","Marowak","Hitmonlee","Hitmonchan","Lickitung","Koffing","Weezing","Rhyhorn","Rhydon",
-      "Chansey","Tangela","Kangaskhan","Horsea","Seadra","Goldeen","Seaking",
-      "Staryu","Starmie","Mr. Mime","Scyther","Jynx","Electabuzz","Magmar","Pinsir","Tauros",
-      "Magikarp","Gyarados","Lapras","Ditto","Eevee","Vaporeon","Jolteon","Flareon",
-      "Porygon","Omanyte","Omastar","Kabuto","Kabutops","Aerodactyl","Snorlax",
-      "Articuno","Zapdos","Moltres","Dratini","Dragonair","Dragonite","Mewtwo","Mew"
-    ];
+<main class="wrap" style="padding:0;">
+  <div id="grid" class="grid"></div>
+</main>
 
-    const grid = document.getElementById("grid");
-    const search = document.getElementById("search");
+<div class="footer">
+  Trainer data loaded from <code>profiles.json</code>
+</div>
 
-    const spriteUrl = (id) =>
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+<script>
+  const names = [
+    "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard",
+    "Squirtle","Wartortle","Blastoise","Caterpie","Metapod","Butterfree",
+    "Weedle","Kakuna","Beedrill","Pidgey","Pidgeotto","Pidgeot",
+    "Rattata","Raticate","Spearow","Fearow","Ekans","Arbok",
+    "Pikachu","Raichu","Sandshrew","Sandslash","Nidoran♀","Nidorina","Nidoqueen",
+    "Nidoran♂","Nidorino","Nidoking","Clefairy","Clefable","Vulpix","Ninetales",
+    "Jigglypuff","Wigglytuff","Zubat","Golbat","Oddish","Gloom","Vileplume",
+    "Paras","Parasect","Venonat","Venomoth","Diglett","Dugtrio","Meowth","Persian",
+    "Psyduck","Golduck","Mankey","Primeape","Growlithe","Arcanine","Poliwag","Poliwhirl","Poliwrath",
+    "Abra","Kadabra","Alakazam","Machop","Machoke","Machamp","Bellsprout","Weepinbell","Victreebel",
+    "Tentacool","Tentacruel","Geodude","Graveler","Golem","Ponyta","Rapidash",
+    "Slowpoke","Slowbro","Magnemite","Magneton","Farfetch'd","Doduo","Dodrio","Seel","Dewgong",
+    "Grimer","Muk","Shellder","Cloyster","Gastly","Haunter","Gengar","Onix",
+    "Drowzee","Hypno","Krabby","Kingler","Voltorb","Electrode","Exeggcute","Exeggutor",
+    "Cubone","Marowak","Hitmonlee","Hitmonchan","Lickitung","Koffing","Weezing","Rhyhorn","Rhydon",
+    "Chansey","Tangela","Kangaskhan","Horsea","Seadra","Goldeen","Seaking",
+    "Staryu","Starmie","Mr. Mime","Scyther","Jynx","Electabuzz","Magmar","Pinsir","Tauros",
+    "Magikarp","Gyarados","Lapras","Ditto","Eevee","Vaporeon","Jolteon","Flareon",
+    "Porygon","Omanyte","Omastar","Kabuto","Kabutops","Aerodactyl","Snorlax",
+    "Articuno","Zapdos","Moltres","Dratini","Dragonair","Dragonite","Mewtwo","Mew"
+  ];
 
-    const pad3 = (n) => String(n).padStart(3, "0");
+  const grid = document.getElementById("grid");
+  const search = document.getElementById("search");
 
-    function safeStr(v){ return (typeof v === "string") ? v.trim() : ""; }
+  const spriteUrl = id =>
+    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
-    function linkPill(label, url){
-      const u = safeStr(url);
-      if (!u) return `<a href="#" aria-disabled="true">${label}</a>`;
-      return `<a href="${u}" target="_blank" rel="noopener noreferrer">${label}</a>`;
-    }
+  const pad3 = n => String(n).padStart(3, "0");
+  const safe = v => typeof v === "string" ? v.trim() : "";
+  const toInt = v => Number.isFinite(Number(v)) ? Number(v) : 0;
 
-    function toInt(v, fallback = 0){
-      const n = Number(v);
-      return Number.isFinite(n) ? n : fallback;
-    }
+  let data = { defaultCollector: "Unclaimed", profiles: {} };
 
-    function buildCard(id, name, profile, defaults){
-      const collector = safeStr(profile.collectorName) || safeStr(defaults.defaultCollector) || "Unclaimed";
-      const cardCount = toInt(profile.cardCount, 0);
-      const xLink = safeStr(profile.x);
+  async function loadProfiles(){
+    const res = await fetch("./profiles.json", { cache: "no-store" });
+    data = await res.json();
+  }
 
-      const card = document.createElement("article");
-      card.className = "card";
-      card.dataset.id = String(id);
-      card.dataset.name = name.toLowerCase();
+  function matches(id, name, f){
+    if(!f) return true;
+    const m = f.match(/^#?(\d{1,3})$/);
+    if(m) return Number(m[1]) === id;
+    return name.toLowerCase().includes(f);
+  }
 
-      card.innerHTML = `
-        <div class="row">
-          <div class="sprite" aria-hidden="true">
-            <img loading="lazy" alt="${name} sprite" src="${spriteUrl(id)}" />
-          </div>
-          <div class="meta">
-            <p class="pname">${name}</p>
-            <div class="dex">#${pad3(id)}</div>
-          </div>
+  function buildCard(id, name, profile){
+    const trainer = safe(profile.collectorName) || data.defaultCollector;
+    const cards = toInt(profile.cardCount);
+    const x = safe(profile.x);
+
+    const el = document.createElement("article");
+    el.className = "card";
+
+    el.innerHTML = `
+      <div class="pokemon">
+        <div class="sprite">
+          <img src="${spriteUrl(id)}" alt="${name}" />
         </div>
+        <p class="pname">${name}</p>
+        <div class="dex">#${pad3(id)}</div>
+      </div>
 
-        <div class="links" role="list">
-          ${linkPill("X", xLink)}
-        </div>
-
+      <div class="stats-row">
         <div class="stats">
-          <div>Trainer: <span>${collector}</span></div>
-          <div>Cards Collected: <span>${cardCount}</span></div>
+          <div>Trainer: <span>${trainer}</span></div>
+          <div>Cards: <span>${cards}</span></div>
         </div>
-      `;
-      return card;
-    }
 
-    let loaded = { defaultCollector: "Unclaimed", profiles: {} };
+        <div class="x-link">
+          ${
+            x
+              ? `<a href="${x}" target="_blank" rel="noopener">X</a>`
+              : `<a aria-disabled="true">X</a>`
+          }
+        </div>
+      </div>
+    `;
+    return el;
+  }
 
-    async function loadProfiles(){
-      try{
-        const res = await fetch("./profiles.json", { cache: "no-store" });
-        if(!res.ok) throw new Error(`profiles.json fetch failed: ${res.status}`);
-        const json = await res.json();
-        loaded.defaultCollector = safeStr(json.defaultCollector) || "Unclaimed";
-        loaded.profiles = (json && json.profiles && typeof json.profiles === "object") ? json.profiles : {};
-      } catch (e) {
-        console.warn("Failed to load profiles.json; using defaults.", e);
-        loaded = { defaultCollector: "Unclaimed", profiles: {} };
+  async function init(){
+    await loadProfiles();
+    render("");
+
+    search.addEventListener("input", e => render(e.target.value));
+  }
+
+  function render(filter){
+    const f = filter.toLowerCase().trim();
+    grid.innerHTML = "";
+
+    for(let i = 1; i <= 151; i++){
+      const name = names[i - 1];
+      if(matches(i, name, f)){
+        grid.appendChild(buildCard(i, name, data.profiles[String(i)] || {}));
       }
     }
+  }
 
-    function matchesFilter(id, name, f){
-      if(!f) return true;
-
-      // numeric searches: "25" or "#25"
-      const m = f.match(/^#?(\d{1,3})$/);
-      if(m){
-        const n = Number(m[1]);
-        return n === id;
-      }
-
-      return name.toLowerCase().includes(f);
-    }
-
-    function render(filter = ""){
-      const f = filter.trim().toLowerCase();
-      grid.innerHTML = "";
-
-      for(let i = 1; i <= 151; i++){
-        const name = names[i - 1];
-        if(!name) continue;
-
-        if(matchesFilter(i, name, f)){
-          const profile = loaded.profiles[String(i)] || {};
-          grid.appendChild(buildCard(i, name, profile, loaded));
-        }
-      }
-    }
-
-    (async function init(){
-      await loadProfiles();
-      render("");
-
-      search.addEventListener("input", (e) => {
-        render(e.target.value);
-      });
-    })();
-  </script>
+  init();
+</script>
 </body>
 </html>
