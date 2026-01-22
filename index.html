@@ -14,7 +14,6 @@
       --link:#9fd3ff;
       --shadow:0 10px 30px rgba(0,0,0,0.35);
       --radius:18px;
-      --panel: rgba(255,255,255,0.06);
     }
 
     *{ box-sizing:border-box; }
@@ -99,12 +98,14 @@
       overflow: hidden;
       border-radius: 14px;
     }
+
     .leaderboard th, .leaderboard td{
       text-align: left;
       padding: 10px 10px;
       border-bottom: 1px solid rgba(255,255,255,0.07);
       font-size: 14px;
     }
+
     .leaderboard th{
       color: var(--muted);
       font-weight: 700;
@@ -112,12 +113,15 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
+
     .leaderboard tr:last-child td{ border-bottom: none; }
+
     .leaderboard .rank{
       width: 52px;
       color: var(--muted);
       font-variant-numeric: tabular-nums;
     }
+
     .leaderboard .num{
       font-variant-numeric: tabular-nums;
       font-weight: 750;
@@ -272,7 +276,6 @@
         <tr>
           <th class="rank">Rank</th>
           <th>Trainer</th>
-          <th>Pokémon Claimed</th>
           <th>Total Cards</th>
         </tr>
       </thead>
@@ -289,7 +292,6 @@
 </div>
 
 <script>
-  // Gen 1 Pokémon names (1–151)
   const names = [
     "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard",
     "Squirtle","Wartortle","Blastoise","Caterpie","Metapod","Butterfree",
@@ -357,8 +359,14 @@
     }
   }
 
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    })[c]);
+  }
+
   let data = { defaultCollector: "Unclaimed", profiles: {} };
-  let items = []; // normalized list for rendering/sorting
+  let items = [];
 
   async function loadProfiles(){
     const res = await fetch("./profiles.json", { cache: "no-store" });
@@ -384,37 +392,32 @@
       const cards = toInt(p.cardCount);
       const x = normalizeXUrl(p.x);
 
-      const claimed = trainer !== defaultCollector || cards > 0 || !!x;
-
-      items.push({ id, name, trainer, cards, x, claimed, defaultCollector });
+      items.push({ id, name, trainer, cards, x, defaultCollector });
     }
   }
 
   function renderLeaderboard(){
-    // Aggregate totals by trainer (ignore "Unclaimed")
     const defaultCollector = safe(data.defaultCollector) || "Unclaimed";
-    const agg = new Map(); // trainer -> { totalCards, claimedCount }
+    const totals = new Map(); // trainer -> totalCards
 
     for(const it of items){
-      const trainer = it.trainer;
-      if(trainer === defaultCollector) continue;
-
-      if(!agg.has(trainer)) agg.set(trainer, { totalCards: 0, claimedCount: 0 });
-      const row = agg.get(trainer);
-      row.totalCards += it.cards;
-      row.claimedCount += 1; // each pokemon tile they appear on
+      if(it.trainer === defaultCollector) continue;
+      totals.set(it.trainer, (totals.get(it.trainer) || 0) + it.cards);
     }
 
-    const rows = [...agg.entries()]
-      .map(([trainer, v]) => ({ trainer, ...v }))
-      .sort((a,b) => b.totalCards - a.totalCards || b.claimedCount - a.claimedCount || a.trainer.localeCompare(b.trainer))
+    const rows = [...totals.entries()]
+      .map(([trainer, totalCards]) => ({ trainer, totalCards }))
+      .sort((a,b) => b.totalCards - a.totalCards || a.trainer.localeCompare(b.trainer))
       .slice(0, 10);
 
     leaderboardBody.innerHTML = "";
 
     if(rows.length === 0){
       const tr = document.createElement("tr");
-      tr.innerHTML = `<td class="rank">—</td><td colspan="3">No trainers yet. Add entries to <code>profiles.json</code>.</td>`;
+      tr.innerHTML = `
+        <td class="rank">—</td>
+        <td colspan="2">No trainers yet. Add entries to <code>profiles.json</code>.</td>
+      `;
       leaderboardBody.appendChild(tr);
       return;
     }
@@ -424,18 +427,10 @@
       tr.innerHTML = `
         <td class="rank">#${idx + 1}</td>
         <td>${escapeHtml(r.trainer)}</td>
-        <td class="num">${r.claimedCount}</td>
         <td class="num">${r.totalCards}</td>
       `;
       leaderboardBody.appendChild(tr);
     });
-  }
-
-  function escapeHtml(s){
-    // small safety improvement since we render trainer names in a table
-    return String(s).replace(/[&<>"']/g, c => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    })[c]);
   }
 
   function applyFilter(list){
@@ -502,7 +497,6 @@
   function render(){
     const q = search.value.toLowerCase().trim();
 
-    // search is on pokemon name/dex; filter is claimed/unclaimed; sort then render
     let list = items.filter(it => matchesSearch(it.id, it.name, q));
     list = applyFilter(list);
     list = applySort(list);
