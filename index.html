@@ -1,11 +1,27 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!--
+    =========================================================
+    151 TRAINERS
+    Static, client-side web app hosted on GitHub Pages
+
+    - Displays all 151 Gen 1 Pokémon
+    - Trainer + card count per Pokémon (from profiles.json)
+    - Leaderboard aggregated by total cards per trainer
+    - Sorting, filtering, and search
+    - Defensive X (Twitter) URL validation
+    =========================================================
+  -->
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>151 Trainers</title>
 
   <style>
+    /* -------------------------------
+       Global theme variables
+       ------------------------------- */
     :root{
       --bg:#0b0d12;
       --muted:#8b93a7;
@@ -28,6 +44,9 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
 
+    /* -------------------------------
+       Sticky header + controls
+       ------------------------------- */
     header{
       position: sticky;
       top: 0;
@@ -77,6 +96,9 @@
 
     option{ background: #0b0d12; }
 
+    /* -------------------------------
+       Leaderboard panel
+       ------------------------------- */
     .panel{
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -125,6 +147,9 @@
       text-decoration:none;
     }
 
+    /* -------------------------------
+       Pokémon grid layout
+       ------------------------------- */
     .grid{
       display:grid;
       grid-template-columns: repeat(2, minmax(0,1fr));
@@ -148,6 +173,7 @@
       min-height: 320px;
     }
 
+    /* Pokémon visual section */
     .pokemon{
       display:flex;
       flex-direction:column;
@@ -183,6 +209,7 @@
       color: var(--muted);
     }
 
+    /* Trainer + card stats */
     .stats-row{
       margin-top:auto;
       border-top: 1px solid rgba(255,255,255,0.08);
@@ -223,17 +250,26 @@
 </head>
 
 <body>
+
+<!-- ======================================================
+     HEADER / CONTROLS
+     ====================================================== -->
 <header>
   <div class="wrap topbar">
     <h1>151 Trainers</h1>
 
     <div class="controls">
+      <!-- Text search: Pokémon name or dex number -->
       <input id="search" class="search" type="search" placeholder="Search Pokémon or #ID" />
+
+      <!-- Filter by claimed state -->
       <select id="filter">
         <option value="all">All</option>
         <option value="claimed">Claimed only</option>
         <option value="unclaimed">Unclaimed only</option>
       </select>
+
+      <!-- Sort order for grid -->
       <select id="sort">
         <option value="dex_asc">Dex # (asc)</option>
         <option value="name_asc">Name (A–Z)</option>
@@ -245,7 +281,12 @@
   </div>
 </header>
 
+<!-- ======================================================
+     MAIN CONTENT
+     ====================================================== -->
 <main class="wrap" style="padding:0;">
+
+  <!-- Leaderboard -->
   <section class="panel">
     <h2>Leaderboard</h2>
     <table class="leaderboard">
@@ -260,10 +301,16 @@
     </table>
   </section>
 
+  <!-- Pokémon grid -->
   <div id="grid" class="grid"></div>
 </main>
 
 <script>
+  /* =====================================================
+     STATIC DATA
+     ===================================================== */
+
+  // Gen 1 Pokémon names indexed by Dex #
   const names = [
     "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard",
     "Squirtle","Wartortle","Blastoise","Caterpie","Metapod","Butterfree",
@@ -287,12 +334,18 @@
     "Articuno","Zapdos","Moltres","Dratini","Dragonair","Dragonite","Mewtwo","Mew"
   ];
 
+  /* =====================================================
+     HELPERS
+     ===================================================== */
+
+  // Sprite source (safe fallback even if cards are added later)
   const spriteUrl = id =>
     `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
   const safe = v => typeof v === "string" ? v.trim() : "";
   const toInt = v => Number.isFinite(Number(v)) ? Number(v) : 0;
 
+  // Normalize + validate X URLs defensively
   function normalizeXUrl(raw){
     const s = safe(raw);
     if(!s) return "";
@@ -303,17 +356,28 @@
       if(!["x.com","www.x.com","twitter.com","www.twitter.com"].includes(u.hostname)) return "";
       if(!u.pathname || u.pathname === "/") return "";
       return u.toString();
-    } catch { return ""; }
+    } catch {
+      return "";
+    }
   }
+
+  /* =====================================================
+     APPLICATION STATE
+     ===================================================== */
 
   let data = { defaultCollector:"Unclaimed", profiles:{} };
   let items = [];
 
+  /* =====================================================
+     DATA LOADING
+     ===================================================== */
+
   async function loadProfiles(){
-    const res = await fetch("./profiles.json",{cache:"no-store"});
+    const res = await fetch("./profiles.json",{ cache:"no-store" });
     data = await res.json();
   }
 
+  // Normalize Pokémon + trainer data into one array
   function buildItems(){
     items=[];
     const def=data.defaultCollector;
@@ -329,6 +393,11 @@
     }
   }
 
+  /* =====================================================
+     RENDERING
+     ===================================================== */
+
+  // Build leaderboard (aggregated by trainer)
   function renderLeaderboard(){
     const totals=new Map();
     const trainerX=new Map();
@@ -356,6 +425,7 @@
     });
   }
 
+  // Render Pokémon grid
   function render(){
     grid.innerHTML="";
     items.forEach(i=>{
@@ -379,6 +449,10 @@
       `);
     });
   }
+
+  /* =====================================================
+     INIT
+     ===================================================== */
 
   (async()=>{
     await loadProfiles();
