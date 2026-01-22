@@ -6,161 +6,167 @@
   <title>151 Trainers</title>
 
   <style>
-    :root {
-      --bg: #0b0d12;
-      --muted: #8b93a7;
-      --text: #e8ecf6;
-      --border: rgba(255,255,255,0.08);
-      --link: #9fd3ff;
-      --shadow: 0 10px 30px rgba(0,0,0,0.35);
-      --radius: 16px;
+    :root{
+      --bg:#0b0d12;
+      --muted:#8b93a7;
+      --text:#e8ecf6;
+      --border:rgba(255,255,255,0.10);
+      --link:#9fd3ff;
+      --shadow:0 10px 30px rgba(0,0,0,0.35);
+      --radius:18px;
     }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
       background:
         radial-gradient(1200px 600px at 30% -10%, rgba(71,121,255,0.25), transparent 60%),
         radial-gradient(900px 500px at 80% 0%, rgba(255,95,179,0.18), transparent 55%),
         var(--bg);
-      color: var(--text);
+      color:var(--text);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
 
-    header {
+    header{
       position: sticky;
       top: 0;
-      backdrop-filter: blur(10px);
-      background: rgba(11,13,18,0.6);
-      border-bottom: 1px solid var(--border);
       z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(11,13,18,0.65);
+      border-bottom: 1px solid var(--border);
     }
-
-    .wrap {
-      max-width: 1200px;
+    .wrap{
+      max-width: 1280px;
       margin: 0 auto;
       padding: 18px 16px;
     }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
     }
+    h1{ margin:0; font-size:22px; letter-spacing:0.2px; }
 
-    h1 { margin: 0; font-size: 18px; }
-
-    input[type="search"] {
-      width: min(420px, 70vw);
-      padding: 10px 12px;
-      border-radius: 12px;
+    .search{
+      width: min(520px, 86vw);
+      padding: 12px 14px;
+      border-radius: 14px;
       border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.07);
       color: var(--text);
+      outline: none;
+      font-size: 15px;
     }
+    .search::placeholder{ color: rgba(232,236,246,0.55); }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      padding: 16px;
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding: 18px 16px;
     }
+    @media (min-width: 640px){ .grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (min-width: 900px){ .grid{ grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+    @media (min-width: 1100px){ .grid{ grid-template-columns: repeat(6, minmax(0, 1fr)); } }
 
-    @media (min-width: 640px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (min-width: 900px) { .grid { grid-template-columns: repeat(5, 1fr); } }
-    @media (min-width: 1100px){ .grid { grid-template-columns: repeat(6, 1fr); } }
-
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 235px;
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      min-height: 270px;
     }
 
-    .row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
+    .row{
+      display:flex;
+      gap: 12px;
+      align-items:center;
     }
 
-    .sprite {
-      width: 64px;
-      height: 64px;
-      border-radius: 14px;
+    .sprite{
+      width: 92px;
+      height: 92px;
+      border-radius: 18px;
       background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      display: grid;
-      place-items: center;
+      border: 1px solid rgba(255,255,255,0.10);
+      display:grid;
+      place-items:center;
+      flex: 0 0 auto;
     }
-
-    .sprite img {
-      width: 56px;
-      height: 56px;
+    .sprite img{
+      width: 84px;
+      height: 84px;
       image-rendering: pixelated;
     }
 
-    .meta {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+    .meta{
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+      min-width: 0;
     }
-
-    .name {
-      font-weight: 650;
+    .pname{
+      margin:0;
+      font-weight: 750;
+      font-size: 18px;
+      line-height: 1.05;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dex{
       font-size: 14px;
-      margin: 0;
-    }
-
-    .dex {
-      font-size: 12px;
       color: var(--muted);
     }
 
-    .links a {
-      font-size: 12px;
+    .links{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+    .links a{
+      font-size: 14px;
       color: var(--link);
-      text-decoration: none;
-      border: 1px solid rgba(159,211,255,0.25);
-      background: rgba(159,211,255,0.08);
-      padding: 6px 10px;
+      text-decoration:none;
+      border: 1px solid rgba(159,211,255,0.30);
+      background: rgba(159,211,255,0.10);
+      padding: 8px 12px;
       border-radius: 999px;
     }
-
-    .links a[aria-disabled="true"] {
+    .links a[aria-disabled="true"]{
       opacity: 0.45;
-      pointer-events: none;
+      pointer-events:none;
     }
 
-    .stats {
-      font-size: 12px;
+    .stats{
+      margin-top: auto;
+      font-size: 14px;
       color: var(--muted);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
     }
-
-    .stats span {
+    .stats span{
       color: var(--text);
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    .footer {
+    .footer{
       color: var(--muted);
       font-size: 12px;
       padding: 0 16px 22px;
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
     }
+    code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace; }
   </style>
 </head>
 
@@ -168,12 +174,12 @@
   <header>
     <div class="wrap topbar">
       <h1>151 Trainers</h1>
-      <input id="search" type="search" placeholder="Search Pokémon or #ID" />
+      <input id="search" class="search" type="search" placeholder="Search Pokémon (e.g., pikachu, #25, 25)" />
     </div>
   </header>
 
   <main class="wrap" style="padding:0;">
-    <div id="grid" class="grid"></div>
+    <div id="grid" class="grid" aria-live="polite"></div>
   </main>
 
   <div class="footer">
@@ -181,83 +187,135 @@
   </div>
 
   <script>
-    const names = [ /* SAME 151-NAME ARRAY YOU ALREADY HAVE */ ];
+    // Full Gen 1 Pokémon names (1–151)
+    const names = [
+      "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard",
+      "Squirtle","Wartortle","Blastoise","Caterpie","Metapod","Butterfree",
+      "Weedle","Kakuna","Beedrill","Pidgey","Pidgeotto","Pidgeot",
+      "Rattata","Raticate","Spearow","Fearow","Ekans","Arbok",
+      "Pikachu","Raichu","Sandshrew","Sandslash","Nidoran♀","Nidorina","Nidoqueen",
+      "Nidoran♂","Nidorino","Nidoking","Clefairy","Clefable","Vulpix","Ninetales",
+      "Jigglypuff","Wigglytuff","Zubat","Golbat","Oddish","Gloom","Vileplume",
+      "Paras","Parasect","Venonat","Venomoth","Diglett","Dugtrio","Meowth","Persian",
+      "Psyduck","Golduck","Mankey","Primeape","Growlithe","Arcanine","Poliwag","Poliwhirl","Poliwrath",
+      "Abra","Kadabra","Alakazam","Machop","Machoke","Machamp","Bellsprout","Weepinbell","Victreebel",
+      "Tentacool","Tentacruel","Geodude","Graveler","Golem","Ponyta","Rapidash",
+      "Slowpoke","Slowbro","Magnemite","Magneton","Farfetch'd","Doduo","Dodrio","Seel","Dewgong",
+      "Grimer","Muk","Shellder","Cloyster","Gastly","Haunter","Gengar","Onix",
+      "Drowzee","Hypno","Krabby","Kingler","Voltorb","Electrode","Exeggcute","Exeggutor",
+      "Cubone","Marowak","Hitmonlee","Hitmonchan","Lickitung","Koffing","Weezing","Rhyhorn","Rhydon",
+      "Chansey","Tangela","Kangaskhan","Horsea","Seadra","Goldeen","Seaking",
+      "Staryu","Starmie","Mr. Mime","Scyther","Jynx","Electabuzz","Magmar","Pinsir","Tauros",
+      "Magikarp","Gyarados","Lapras","Ditto","Eevee","Vaporeon","Jolteon","Flareon",
+      "Porygon","Omanyte","Omastar","Kabuto","Kabutops","Aerodactyl","Snorlax",
+      "Articuno","Zapdos","Moltres","Dratini","Dragonair","Dragonite","Mewtwo","Mew"
+    ];
 
     const grid = document.getElementById("grid");
     const search = document.getElementById("search");
 
-    const spriteUrl = id =>
+    const spriteUrl = (id) =>
       `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 
-    function pad3(n) { return String(n).padStart(3, "0"); }
+    const pad3 = (n) => String(n).padStart(3, "0");
 
-    async function loadProfiles() {
-      const res = await fetch("./profiles.json", { cache: "no-store" });
-      return res.json();
+    function safeStr(v){ return (typeof v === "string") ? v.trim() : ""; }
+
+    function linkPill(label, url){
+      const u = safeStr(url);
+      if (!u) return `<a href="#" aria-disabled="true">${label}</a>`;
+      return `<a href="${u}" target="_blank" rel="noopener noreferrer">${label}</a>`;
     }
 
-    function buildCard(id, name, profile, defaults) {
-      const collector = profile.collectorName || defaults.defaultCollector;
-      const cards = Number(profile.cardCount ?? 0);
-      const xLink = profile.x || "";
+    function toInt(v, fallback = 0){
+      const n = Number(v);
+      return Number.isFinite(n) ? n : fallback;
+    }
+
+    function buildCard(id, name, profile, defaults){
+      const collector = safeStr(profile.collectorName) || safeStr(defaults.defaultCollector) || "Unclaimed";
+      const cardCount = toInt(profile.cardCount, 0);
+      const xLink = safeStr(profile.x);
 
       const card = document.createElement("article");
       card.className = "card";
+      card.dataset.id = String(id);
+      card.dataset.name = name.toLowerCase();
 
       card.innerHTML = `
         <div class="row">
-          <div class="sprite">
-            <img src="${spriteUrl(id)}" alt="${name}" />
+          <div class="sprite" aria-hidden="true">
+            <img loading="lazy" alt="${name} sprite" src="${spriteUrl(id)}" />
           </div>
           <div class="meta">
-            <p class="name">${name}</p>
+            <p class="pname">${name}</p>
             <div class="dex">#${pad3(id)}</div>
           </div>
         </div>
 
-        <div class="links">
-          ${
-            xLink
-              ? `<a href="${xLink}" target="_blank" rel="noopener">X</a>`
-              : `<a aria-disabled="true">X</a>`
-          }
+        <div class="links" role="list">
+          ${linkPill("X", xLink)}
         </div>
 
         <div class="stats">
           <div>Trainer: <span>${collector}</span></div>
-          <div>Cards Collected: <span>${cards}</span></div>
+          <div>Cards Collected: <span>${cardCount}</span></div>
         </div>
       `;
       return card;
     }
 
-    async function init() {
-      const data = await loadProfiles();
+    let loaded = { defaultCollector: "Unclaimed", profiles: {} };
 
-      function render(filter = "") {
-        grid.innerHTML = "";
-        filter = filter.toLowerCase();
-
-        for (let i = 1; i <= 151; i++) {
-          const name = names[i - 1];
-          if (
-            !filter ||
-            name.toLowerCase().includes(filter) ||
-            filter === String(i) ||
-            filter === "#" + i
-          ) {
-            grid.appendChild(
-              buildCard(i, name, data.profiles[String(i)] || {}, data)
-            );
-          }
-        }
+    async function loadProfiles(){
+      try{
+        const res = await fetch("./profiles.json", { cache: "no-store" });
+        if(!res.ok) throw new Error(`profiles.json fetch failed: ${res.status}`);
+        const json = await res.json();
+        loaded.defaultCollector = safeStr(json.defaultCollector) || "Unclaimed";
+        loaded.profiles = (json && json.profiles && typeof json.profiles === "object") ? json.profiles : {};
+      } catch (e) {
+        console.warn("Failed to load profiles.json; using defaults.", e);
+        loaded = { defaultCollector: "Unclaimed", profiles: {} };
       }
-
-      render();
-      search.addEventListener("input", e => render(e.target.value));
     }
 
-    init();
+    function matchesFilter(id, name, f){
+      if(!f) return true;
+
+      // numeric searches: "25" or "#25"
+      const m = f.match(/^#?(\d{1,3})$/);
+      if(m){
+        const n = Number(m[1]);
+        return n === id;
+      }
+
+      return name.toLowerCase().includes(f);
+    }
+
+    function render(filter = ""){
+      const f = filter.trim().toLowerCase();
+      grid.innerHTML = "";
+
+      for(let i = 1; i <= 151; i++){
+        const name = names[i - 1];
+        if(!name) continue;
+
+        if(matchesFilter(i, name, f)){
+          const profile = loaded.profiles[String(i)] || {};
+          grid.appendChild(buildCard(i, name, profile, loaded));
+        }
+      }
+    }
+
+    (async function init(){
+      await loadProfiles();
+      render("");
+
+      search.addEventListener("input", (e) => {
+        render(e.target.value);
+      });
+    })();
   </script>
 </body>
 </html>
