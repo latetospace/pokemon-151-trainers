@@ -1,6 +1,11 @@
 {
   "defaultCollector": "Unclaimed",
   "profiles": {
+    "128": {
+      "collectorName": "Tauros Titan",
+      "cardCount": 318,
+      "x": "https://x.com/Bull_T128"
+    },
     "140": {
       "collectorName": "Kabuto King",
       "cardCount": 2959,
